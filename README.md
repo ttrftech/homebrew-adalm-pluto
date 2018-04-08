@@ -17,3 +17,6 @@ $ brew install ttrftech/adalm-pluto/gr-iio
 ## Reference
 
 - http://www.analog.com/jp/design-center/evaluation-hardware-and-software/evaluation-boards-kits/adalm-pluto.html
+- https://github.com/analogdevicesinc/gr-iio/
+- https://github.com/analogdevicesinc/libiio
+- https://github.com/analogdevicesinc/libad9361-iio
