@@ -1,6 +1,7 @@
 require 'formula'
 
 class GrIio < Formula
+  desc "ADI IIO interface for GnuRadio"
   homepage 'https://github.com/analogdevicesinc/gr-iio'
   url 'https://github.com/analogdevicesinc/gr-iio/archive/v0.3.tar.gz'
   sha256 'e3e6e5f2949256737352184578a342fa53c0c1d33db1f34d73cfb88f5513c077'
