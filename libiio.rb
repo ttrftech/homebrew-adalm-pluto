@@ -1,9 +1,10 @@
 require 'formula'
 
 class Libiio < Formula
+  desc "ADI IIO (Industrial IO) interface framework"
   homepage 'https://github.com/analogdevicesinc/libiio'
-  url 'https://github.com/analogdevicesinc/libiio/archive/v0.14.tar.gz'
-  sha256 '12063db7a9366aa00bfd789db30afaddb29686bc29b3ce1e5d4adfe1c3b42527'
+  url 'https://github.com/analogdevicesinc/libiio/archive/v0.15.tar.gz'
+  sha256 'a729f8ff48137ad271a3e2951f322b35c1bf2ec075b488d75c8bd071c693fd19'
   head 'git://github.com/analogdevicesinc/libiio/'
 
   depends_on 'cmake'
@@ -15,6 +16,9 @@ class Libiio < Formula
     mkdir 'build' do
       args = std_cmake_args
       system 'cmake', '..', *args
+      inreplace "libiio.pc", prefix, opt_prefix/"lib"
+      inreplace "libiio.pc", "/include", "/iio.framework/Headers"
+      inreplace "libiio.pc", "${prefix}/lib", "${prefix}"
       system 'make'
       system 'make install'
     end
@@ -35,7 +39,7 @@ end
 
 __END__
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index e697ede..de1e54a 100644
+index 1e198e2..916dcdc 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -31,9 +31,7 @@ endif()
@@ -48,6 +52,14 @@ index e697ede..de1e54a 100644
  endif()
  
  option(WITH_NETWORK_BACKEND "Enable the network backend" ON)
+@@ -316,7 +314,6 @@ add_library(iio ${LIBIIO_CFILES} ${LIBIIO_HEADERS} ${LIBIIO_EXTRA_HEADERS} ${LIB
+ set_target_properties(iio PROPERTIES
+ 	VERSION ${VERSION}
+ 	SOVERSION ${LIBIIO_VERSION_MAJOR}
+-	FRAMEWORK TRUE
+ 	PUBLIC_HEADER ${LIBIIO_HEADERS}
+ 	C_STANDARD 99
+ 	C_STANDARD_REQUIRED ON
 @@ -333,7 +330,7 @@ if(NOT SKIP_INSTALL_ALL)
  		ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
  		LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -67,10 +79,10 @@ index e697ede..de1e54a 100644
  			--distribution ${LIBIIO_DISTRIBUTION_XML} ${LIBIIO_PKG}
  		COMMAND ${CMAKE_COMMAND} -E remove ${LIBIIO_TEMP_PKG}
 diff --git a/tests/CMakeLists.txt b/tests/CMakeLists.txt
-index 9464b02..2a39afb 100644
+index e734e1d..3f46267 100644
 --- a/tests/CMakeLists.txt
 +++ b/tests/CMakeLists.txt
-@@ -47,7 +47,7 @@ set_target_properties(${IIO_TESTS_TARGETS} PROPERTIES
+@@ -50,7 +50,7 @@ set_target_properties(${IIO_TESTS_TARGETS} PROPERTIES
  
  if(NOT SKIP_INSTALL_ALL)
  	if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
