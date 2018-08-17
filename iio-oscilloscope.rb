@@ -1,9 +1,9 @@
-require 'formula'
-
 class IioOscilloscope < Formula
-  desc "ADI IIO-Oscilloscope "
+  desc 'ADI IIO-Oscilloscope'
   homepage 'https://github.com/analogdevicesinc/iio-oscilloscope/'
-  url 'https://github.com/analogdevicesinc/iio-oscilloscope/archive/v0.8-master.tar.gz'
+  #url 'https://github.com/analogdevicesinc/iio-oscilloscope/archive/v0.8-master.tar.gz'
+  url 'https://github.com/analogdevicesinc/iio-oscilloscope.git', :tag=>"v0.8-master"
+  version '0.8'
   sha256 '45b451a6086e52275ec761f2b5c3a2e28bf8bd3264bddaca1da2890cd1efb3d7'
   head 'https://github.com/analogdevicesinc/iio-oscilloscope/'
 
@@ -19,9 +19,9 @@ class IioOscilloscope < Formula
   depends_on 'hdf5'
   depends_on 'gcc'
   depends_on 'pkg-config'
- 
+
   patch :DATA
-  
+
   def install
     args = ["CC=gcc-8", "PREFIX=#{prefix}"]
     system 'make', *args
