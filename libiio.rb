@@ -1,5 +1,3 @@
-require 'formula'
-
 class Libiio < Formula
   desc "ADI IIO (Industrial IO) interface framework"
   homepage 'https://github.com/analogdevicesinc/libiio'
@@ -11,7 +9,7 @@ class Libiio < Formula
   depends_on 'python@2' => :optional
 
   patch :DATA
-  
+
   def install
     mkdir 'build' do
       args = std_cmake_args
@@ -20,7 +18,7 @@ class Libiio < Formula
       inreplace "libiio.pc", "/include", "/iio.framework/Headers"
       inreplace "libiio.pc", "${prefix}/lib", "${prefix}"
       system 'make'
-      system 'make install'
+      system 'make', 'install'
     end
 
     if build.with? "python@2"
@@ -31,7 +29,7 @@ class Libiio < Formula
         args << "-DPythonInterp_FIND_VERSION_MAJOR=2"
         system 'cmake', '..', *args
         system 'make'
-        system 'make install'
+        system 'make', 'install'
       end
     end
   end

@@ -1,5 +1,3 @@
-require 'formula'
-
 class Libad9361Iio < Formula
   desc "ADI AD9361 interface for IIO"
   homepage 'https://github.com/analogdevicesinc/libad9361-iio'
@@ -11,7 +9,7 @@ class Libad9361Iio < Formula
   depends_on 'libiio'
 
   patch :DATA
-  
+
   def install
     mkdir 'build' do
       args = std_cmake_args
@@ -19,7 +17,7 @@ class Libad9361Iio < Formula
       inreplace "libad9361.pc", prefix, opt_prefix
       inreplace "libad9361.pc", "/include", "/lib/ad9361.framework/Headers"
       system 'make'
-      system 'make install'
+      system 'make', 'install'
     end
   end
 end
